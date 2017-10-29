@@ -10,13 +10,17 @@ return function (\Zend\Expressive\Application $app): void {
         \Oqq\Broetchen\Middleware\JsonCommandMiddleware::class,
     ]);
 
+    $app->post('/api/register', [
+        \Oqq\Broetchen\Middleware\RegisterMiddleware::class,
+        \Oqq\Broetchen\Middleware\JsonCommandMiddleware::class,
+    ]);
+
     $app->get('/api/user', [
         \Oqq\Broetchen\Middleware\UserDataMiddleware::class,
     ]);
 
-    $app->post('/api/register', [
-        \Oqq\Broetchen\Middleware\RegisterMiddleware::class,
-        \Oqq\Broetchen\Middleware\JsonCommandMiddleware::class,
+    $app->post('/api/orders', [
+        \Oqq\Broetchen\Middleware\OrderMiddleware::class,
     ]);
 
     $app->get('/api/service/{pattern:.+}', [

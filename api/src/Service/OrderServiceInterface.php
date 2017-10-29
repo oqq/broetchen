@@ -6,11 +6,18 @@ namespace Oqq\Broetchen\Service;
 
 use Oqq\Broetchen\Command\CreateOrder;
 use Oqq\Broetchen\Domain\Order\Order;
+use Oqq\Broetchen\Domain\Order\OrderCollection;
 use Oqq\Broetchen\Domain\Order\OrderId;
+use Oqq\Broetchen\Domain\Service\ServiceId;
+use Oqq\Broetchen\Domain\User\UserId;
 
 interface OrderServiceInterface
 {
     public function getOrderWithId(OrderId $orderId): Order;
 
     public function addOrder(CreateOrder $order);
+
+    public function getOrdersFromUser(UserId $userId): OrderCollection;
+
+    public function getOrdersForService(ServiceId $serviceId): OrderCollection;
 }
