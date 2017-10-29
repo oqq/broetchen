@@ -19,7 +19,7 @@ return function (\Zend\Expressive\Application $app): void {
         \Oqq\Broetchen\Middleware\UserDataMiddleware::class,
     ]);
 
-    $app->post('/api/orders', [
+    $app->route('/api/orders', [
         \Oqq\Broetchen\Middleware\OrderMiddleware::class,
     ]);
 

@@ -16,6 +16,7 @@ return [
             \Oqq\Broetchen\Service\PasswordHashService::class => \Oqq\Broetchen\Service\NativePasswordHashService::class,
             \Oqq\Broetchen\Service\UserServiceInterface::class => \Oqq\Broetchen\Service\MongoUserService::class,
             \Oqq\Broetchen\Service\ServiceServiceInterface::class => \Oqq\Broetchen\Service\MongoServiceService::class,
+            \Oqq\Broetchen\Service\OrderServiceInterface::class => \Oqq\Broetchen\Service\MongoOrderService::class,
         ],
         'factories' => [
             \Oqq\Broetchen\Middleware\JsonCommandMiddleware::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
@@ -24,9 +25,13 @@ return [
     ],
 
     \Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory::class => [
+
         \Oqq\Broetchen\Service\MongoUserService::class => [
             'collection.users',
             \Oqq\Broetchen\Service\PasswordHashService::class,
+        ],
+        \Oqq\Broetchen\Service\MongoOrderService::class => [
+            'collection.orders',
         ],
         \Oqq\Broetchen\Service\MongoServiceService::class => [
             'collection.services',
@@ -50,6 +55,9 @@ return [
         ],
         \Oqq\Broetchen\Middleware\RegisterMiddleware::class => [
             \Oqq\Broetchen\Service\UserServiceInterface::class
+        ],
+        \Oqq\Broetchen\Middleware\OrderMiddleware::class => [
+            \Oqq\Broetchen\Service\OrderServiceInterface::class,
         ],
         \Oqq\Broetchen\Middleware\FindServiceMiddleware::class => [
             \Oqq\Broetchen\Service\UserServiceInterface::class,
