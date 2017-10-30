@@ -21,6 +21,7 @@ return function (\Zend\Expressive\Application $app): void {
 
     $app->route('/api/orders', [
         \Oqq\Broetchen\Middleware\OrderMiddleware::class,
+        \Oqq\Broetchen\Middleware\JsonCommandMiddleware::class,
     ]);
 
     $app->get('/api/service/{pattern:.+}', [

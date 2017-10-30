@@ -55,6 +55,6 @@ final class MongoOrderService implements OrderServiceInterface
     {
         $orders = $this->collection->find(['service_id' => $serviceId->toString()]);
 
-        return OrderCollection::fromArray($orders->toArray());
+        return OrderCollection::fromArray(iterator_to_array($orders->toArray()));
     }
 }

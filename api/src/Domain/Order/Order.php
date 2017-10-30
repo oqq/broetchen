@@ -14,20 +14,18 @@ final class Order
     private $orderId;
     private $userId;
     private $serviceId;
-    private $name;
     private $products;
 
     public static function fromArray(array $values): self
     {
-        Assertion::choicesNotEmpty($values, ['order_id', 'user_id', 'service_id', 'name', 'products']);
+        Assertion::choicesNotEmpty($values, ['order_id', 'user_id', 'service_id', 'products']);
 
         $userId = UserId::fromString($values['user_id']);
         $serviceId = ServiceId::fromString($values['service_id']);
         $orderId = OrderId::fromString($values['order_id']);
-        $name = OrderName::fromString($values['name']);
         $products = ProductCollection::fromArray($values['products']);
 
-        return new self($orderId, $userId, $serviceId, $name, $products);
+        return new self($orderId, $userId, $serviceId, $products);
     }
 
     public function orderId(): OrderId
@@ -41,7 +39,6 @@ final class Order
             'order_id' => $this->orderId->toString(),
             'user_id' => $this->userId->toString(),
             'service_id' => $this->serviceId->toString(),
-            'name' => $this->name->toString(),
             'products' => $this->products->getArrayCopy(),
         ];
     }
@@ -50,13 +47,11 @@ final class Order
         OrderId $orderId,
         UserId $userId,
         ServiceId $serviceId,
-        OrderName $name,
         ProductCollection $products
     ) {
         $this->orderId = $orderId;
         $this->userId = $userId;
         $this->serviceId = $serviceId;
-        $this->name = $name;
         $this->products = $products;
     }
 }

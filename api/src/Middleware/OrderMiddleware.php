@@ -46,7 +46,7 @@ final class OrderMiddleware implements MiddlewareInterface
             $values['order_id'] = OrderId::generate()->toString();
             $values['user_id'] = $userId->toString();
 
-            $createOrder = CreateOrder::fromArray($values);
+            $createOrder = CreateOrder::fromArray(['order' => $values]);
             $this->orderService->addOrder($createOrder);
 
             return $delegate->process($request);

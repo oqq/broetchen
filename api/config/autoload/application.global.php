@@ -58,6 +58,8 @@ return [
         ],
         \Oqq\Broetchen\Middleware\OrderMiddleware::class => [
             \Oqq\Broetchen\Service\OrderServiceInterface::class,
+            \Zend\Expressive\Hal\ResourceGenerator::class,
+            \Zend\Expressive\Hal\HalResponseFactory::class,
         ],
         \Oqq\Broetchen\Middleware\FindServiceMiddleware::class => [
             \Oqq\Broetchen\Service\UserServiceInterface::class,
