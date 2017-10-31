@@ -9,7 +9,7 @@ use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Oqq\Broetchen\Command\CreateOrder;
 use Oqq\Broetchen\Domain\Order\OrderId;
 use Oqq\Broetchen\Domain\User\UserId;
-use Oqq\Broetchen\Service\OrderServiceInterface;
+use Oqq\Broetchen\Domain\Order\OrderService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\EmptyResponse;
@@ -18,7 +18,7 @@ final class OrderAddMiddleware implements MiddlewareInterface
 {
     private $orderService;
 
-    public function __construct(OrderServiceInterface $orderService)
+    public function __construct(OrderService $orderService)
     {
         $this->orderService = $orderService;
     }

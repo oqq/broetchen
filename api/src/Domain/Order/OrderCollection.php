@@ -8,7 +8,6 @@ use ArrayIterator;
 use Assert\Assertion;
 use Iterator;
 use IteratorAggregate;
-use Traversable;
 
 final class OrderCollection implements IteratorAggregate
 {
