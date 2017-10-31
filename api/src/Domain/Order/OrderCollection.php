@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Oqq\Broetchen\Domain\Order;
 
+use ArrayIterator;
 use Assert\Assertion;
+use Iterator;
+use IteratorAggregate;
+use Traversable;
 
-final class OrderCollection
+final class OrderCollection implements IteratorAggregate
 {
     private $orders;
 
@@ -32,6 +36,11 @@ final class OrderCollection
         }
 
         return $orders;
+    }
+
+    public function getIterator(): Iterator
+    {
+        return new ArrayIterator($this->orders);
     }
 
     private function __construct(Order ...$orders)

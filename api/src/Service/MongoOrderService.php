@@ -30,7 +30,7 @@ final class MongoOrderService implements OrderServiceInterface
             throw new OrderNotFoundByIdException($orderId);
         }
 
-        return Order::fromArray(iterator_to_array($order));
+        return Order::fromArray((array) $order);
     }
 
     public function addOrder(CreateOrder $command)
@@ -55,6 +55,6 @@ final class MongoOrderService implements OrderServiceInterface
     {
         $orders = $this->collection->find(['service_id' => $serviceId->toString()]);
 
-        return OrderCollection::fromArray(iterator_to_array($orders->toArray()));
+        return OrderCollection::fromArray($orders->toArray());
     }
 }

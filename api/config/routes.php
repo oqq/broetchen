@@ -19,8 +19,10 @@ return function (\Zend\Expressive\Application $app): void {
         \Oqq\Broetchen\Middleware\UserDataMiddleware::class,
     ]);
 
-    $app->route('/api/orders', [
-        \Oqq\Broetchen\Middleware\OrderMiddleware::class,
+
+    // ORDERS
+    $app->post('/api/order', [
+        \Oqq\Broetchen\Middleware\Order\OrderAddMiddleware::class,
         \Oqq\Broetchen\Middleware\JsonCommandMiddleware::class,
     ]);
 
@@ -28,4 +30,12 @@ return function (\Zend\Expressive\Application $app): void {
         \Oqq\Broetchen\Middleware\FindServiceMiddleware::class,
         \Oqq\Broetchen\Middleware\JsonCommandMiddleware::class,
     ]);
+
+    $app->get('/api/order/{order_id:[a-z0-9\-]{36}}', [
+        \Oqq\Broetchen\Middleware\Order\OrderMiddleware::class,
+    ], 'order');
+
+    $app->get('/api/orders', [
+        \Oqq\Broetchen\Middleware\Order\OrdersMiddleware::class,
+    ], 'orders');
 };

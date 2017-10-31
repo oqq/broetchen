@@ -56,7 +56,15 @@ return [
         \Oqq\Broetchen\Middleware\RegisterMiddleware::class => [
             \Oqq\Broetchen\Service\UserServiceInterface::class
         ],
-        \Oqq\Broetchen\Middleware\OrderMiddleware::class => [
+        \Oqq\Broetchen\Middleware\Order\OrderAddMiddleware::class => [
+            \Oqq\Broetchen\Service\OrderServiceInterface::class,
+        ],
+        \Oqq\Broetchen\Middleware\Order\OrderMiddleware::class => [
+            \Oqq\Broetchen\Service\OrderServiceInterface::class,
+            \Zend\Expressive\Hal\ResourceGenerator::class,
+            \Zend\Expressive\Hal\HalResponseFactory::class,
+        ],
+        \Oqq\Broetchen\Middleware\Order\OrdersMiddleware::class => [
             \Oqq\Broetchen\Service\OrderServiceInterface::class,
             \Zend\Expressive\Hal\ResourceGenerator::class,
             \Zend\Expressive\Hal\HalResponseFactory::class,

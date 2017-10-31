@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Oqq\Broetchen\Middleware;
+namespace Oqq\Broetchen\Middleware\Order;
 
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use Oqq\Broetchen\Command\CreateOrder;
-use Oqq\Broetchen\Domain\Order\OrderId;
 use Oqq\Broetchen\Domain\User\UserId;
 use Oqq\Broetchen\Service\OrderServiceInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,7 +14,7 @@ use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Expressive\Hal\HalResponseFactory;
 use Zend\Expressive\Hal\ResourceGenerator;
 
-final class OrderMiddleware implements MiddlewareInterface
+final class OrdersMiddleware implements MiddlewareInterface
 {
     private $orderService;
     private $resourceGenerator;
@@ -26,7 +24,8 @@ final class OrderMiddleware implements MiddlewareInterface
         OrderServiceInterface $orderService,
         ResourceGenerator $resourceGenerator,
         HalResponseFactory $responseFactory
-    ) {
+    )
+    {
         $this->resourceGenerator = $resourceGenerator;
         $this->responseFactory = $responseFactory;
         $this->orderService = $orderService;
@@ -41,22 +40,11 @@ final class OrderMiddleware implements MiddlewareInterface
             return new EmptyResponse(401);
         }
 
-        if ($request->getMethod() === 'POST') {
-            $values = $request->getParsedBody();
-            $values['order_id'] = OrderId::generate()->toString();
-            $values['user_id'] = $userId->toString();
-
-            $createOrder = CreateOrder::fromArray(['order' => $values]);
-            $this->orderService->addOrder($createOrder);
-
-            return $delegate->process($request);
-        }
-
         $orders = $this->orderService->getOrdersFromUser($userId);
 
         return $this->responseFactory->createResponse(
             $request,
-            $this->resourceGenerator->fromArray($orders->getArrayCopy())
+            $this->resourceGenerator->fromObject($orders, $request)
         );
     }
 }
