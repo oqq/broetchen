@@ -6,10 +6,11 @@ namespace Oqq\Broetchen\Container;
 
 use Interop\Config\ConfigurationTrait;
 use Interop\Config\RequiresConfig;
+use Interop\Config\RequiresMandatoryOptions;
 use MongoDB\Client;
 use Psr\Container\ContainerInterface;
 
-final class MongoClientFactory implements RequiresConfig
+final class MongoClientFactory implements RequiresConfig, RequiresMandatoryOptions
 {
     use ConfigurationTrait;
 
@@ -18,11 +19,20 @@ final class MongoClientFactory implements RequiresConfig
         $config = $container->get('config');
         $options = $this->options($config);
 
-        return new Client($options['server']);
+        return new Client(
+            $options['server'],
+            $options['uriOptions'] ?? [],
+            $options['driverOptions'] ?? []
+        );
     }
 
     public function dimensions(): iterable
     {
         return ['mongodb'];
+    }
+
+    public function mandatoryOptions(): iterable
+    {
+        return ['server'];
     }
 }

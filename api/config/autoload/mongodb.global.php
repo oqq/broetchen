@@ -17,5 +17,12 @@ return [
     'mongodb' => [
         'server' => 'mongodb://mongo',
         'database' => 'broetchen',
+        'driverOptions' => [
+            'typeMap' => [
+                'root' => 'array',
+                'document' => 'array',
+                'array' => 'array',
+            ],
+        ],
     ],
 ];
